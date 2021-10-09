@@ -1,5 +1,3 @@
-from typing import List
-
 from location import Location
 from pilot import Pilot
 from passenger import Passenger

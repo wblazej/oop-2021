@@ -12,7 +12,8 @@ class Flight:
     pilots: List[Pilot]
     passengers: List[Passenger]
 
-    def __init__(self, destination: Location, airplane: Airplane, pilots: List[Pilot] = [], passengers: List[Passenger] = []):
+    def __init__(self, destination: Location, airplane: Airplane, 
+                pilots: List[Pilot] = [], passengers: List[Passenger] = []):
         self.airplane = airplane
         self.destination = destination
         self.pilots = pilots
