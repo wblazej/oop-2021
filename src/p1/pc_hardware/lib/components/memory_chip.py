@@ -1,6 +1,6 @@
 from lib.component import Component
 
-class RAMMemory(Component):
+class MemoryChip(Component):
     __standard: str
     __frequency_MHz: int
     __memory_gb: int

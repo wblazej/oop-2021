@@ -10,9 +10,11 @@ class Computer:
 
     def __repr__(self):
         components = '\n'.join([f' > {x}' for x in [
+            self.__motherboard,
             self.__motherboard.cpu,
             self.__motherboard.ram,
-            self.__motherboard.disks
+            self.__motherboard.disks,
+            self.__motherboard.gpu
         ]]) 
         return f'Running: {self.__is_running}\nComponents:\n{components}'
 
@@ -29,6 +31,18 @@ class Computer:
     def run(self):
         if self.__is_running:
             raise RuntimeError("Computer is already running")
+
+        if not self.__motherboard:
+            raise RuntimeError("Computer does not have a motherboard")
+
+        if not self.__motherboard.cpu:
+            raise RuntimeError("Computer does not have a CPU")
+
+        if not len(self.__motherboard.ram):
+            raise RuntimeError("Computer does not have a single memory chip")
+
+        if not self.__motherboard.gpu:
+            raise RuntimeError("Computer does not have a GPU")
 
         self.__is_running = True
 

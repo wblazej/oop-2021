@@ -42,6 +42,10 @@ class SSD(Disk):
             f'Write: {self.write_speed_mbps}, TBW: {self.__total_bytes_written_tb}TB)'
         )
 
+    @property
+    def total_bytes_written_tb(self) -> int:
+        return self.__total_bytes_written_tb
+
 class HDD(Disk):
     __rmp: int
 
@@ -54,3 +58,7 @@ class HDD(Disk):
             f'{type(self).__name__}({self.capacity_gb}GB {self.connector} Read: {self.read_speed_mbps},' 
             f'Write: {self.write_speed_mbps}, RMP: {self.__rmp}rmp)'
         )
+
+    @property
+    def rmp(self) -> int:
+        return self.__rmp
