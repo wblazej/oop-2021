@@ -16,5 +16,5 @@ a = A()
 print(a.pole)
 print(a.field)  # wygląda jak publiczne pole.. ale jest tak naprawdę metodą (getterem)
 
-a.field = 19
+a.field = 19    # wygląda jak publiczne pole ale to jest setter (nawet nawigacja w pycharm działa poprawnie)
 print(a.field)  # wygląda jak publiczne pole.. ale jest tak naprawdę metodą (getterem)

@@ -15,7 +15,34 @@ Zadnie do zrobienia:
  Poprawnie wyłączyć system
 
 
-Context... Dependency Injection....
+
+
+
+
+
+      ClientStore                          EmployeeStore
+
+               │  ┌────────────────────────────    │
+               │ ┌┤                              │ │
+               │ ││                              │ │
+               │ ││                              │ │
+               │ ││                              │ └─────────────────────────────►
+               │ ││                              │                              MetricsExporter
+               │ ││                              │
+               │ ││                              │
+               │ ││                              │
+               │ ││                              │
+               │ ││                              │
+               │ ││                              │
+               │ ││                              │
+               │ └▼───────────────────────────►  ▼
+               ▼
+
+          Logger                               AccessRightsChecker
+
+
+
+
 
 """
 from dataclasses import dataclass
