@@ -53,6 +53,7 @@ from p1.model import Client, Request
 
 class AccessRightsChecker:
     rights = {}
+
     def can_get_client_details(self, request: Request):
         # jakiś check...
         return True
@@ -67,6 +68,7 @@ class LoggedProtectedStore:
     access_checker: AccessRightsChecker
 
     def __init__(self, access_checker: AccessRightsChecker, logger: Logger):
+        print('executing constructor of LoggedProtectedStore')
         self.l = logger
         self.access_checker = access_checker
 
@@ -80,12 +82,17 @@ class ClientStore(LoggedProtectedStore):
         return self.clients.get(clientid)
 
 
-class EmployeeHrStore(LoggedProtectedStore):
-    pass
-
-
 class MetricsExporter:
     pass
+
+
+class EmployeeHrStore(LoggedProtectedStore):
+
+    def __init__(self, access_checker: AccessRightsChecker, logger: Logger, metrics_exporter: MetricsExporter):
+        print('executing constructor of EmployeeHrStore')
+        super(EmployeeHrStore, self).__init__(access_checker, logger)
+        print('done executing constructor of EmployeeHrStore')
+
 
 
 class Context:
@@ -101,12 +108,13 @@ class Context:
 
     def setup(self):
         # tworzenie pełnego grafu serwisów
-        print('creating context')
+        print('setting up context')
         self.__logger = Logger()
         self.__access_checker = AccessRightsChecker()
-        self.__client_store = ClientStore(access_checker=self.__access_checker, logger=self.__logger)
-        self.__employee_store = EmployeeHrStore(access_checker=self.__access_checker, logger=self.__logger)
         self.__metrics = MetricsExporter()
+        self.__client_store = ClientStore(access_checker=self.__access_checker, logger=self.__logger)
+        self.__employee_store = EmployeeHrStore(access_checker=self.__access_checker, logger=self.__logger,
+                                                metrics_exporter=self.__metrics)
         print('context initialized')
 
     def teardown(self):
@@ -117,5 +125,10 @@ class Context:
 
 
 if __name__ == '__main__':
-    cs = ClientStore(access_checker=None, logger=None)
-    print(cs.get_client_by_id(3))
+    # cs = ClientStore(access_checker=None, logger=None)
+    # print(cs.get_client_by_id(3))
+    context = Context()
+    context.setup()
+    print('context created')
+    print('now tearing down context')
+    context.teardown()
