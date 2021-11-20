@@ -1,0 +1,24 @@
+Smart Log for NVME device:SSD-root--fs namespace-id:ffffffff
+critical_warning                    : 0
+temperature                         : 27 C
+available_spare                     : 100%
+available_spare_threshold           : 10%
+percentage_used                     : 6%
+data_units_read                     : 262,173,505
+data_units_written                  : 244,933,773
+host_read_commands                  : 359,896,830
+host_write_commands                 : 435,057,286
+controller_busy_time                : 13,454
+power_cycles                        : 120
+power_on_hours                      : 678
+unsafe_shutdowns                    : 87
+media_errors                        : 0
+num_err_log_entries                 : 0
+Warning Temperature Time            : 1
+Critical Composite Temperature Time : 0
+Temperature Sensor 1                : 27 C
+Temperature Sensor 2                : 34 C
+Thermal Management T1 Trans Count   : 0
+Thermal Management T2 Trans Count   : 832
+Thermal Management T1 Total Time    : 0
+Thermal Management T2 Total Time    : 90
