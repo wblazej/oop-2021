@@ -19,21 +19,21 @@ class F:
 
     # potrzebne do a<b, oraz .sort()
     def __lt__(self, other):
-        return (self.a < other.a)
+        return (self.a < other.__a)
 
     # potrzebne do set(), dict()
     def __hash__(self) -> int:
         return self.a.__hash__()
 
     def __eq__(self, other):
-        return self.a == other.a
+        return self.a == other.__a
 
     # implementacja arytmetyki
     def __add__(self, other):
-        return F(self.a + other.a)
+        return F(self.a + other.__a)
 
     def __mul__(self, other):
-        return F(self.a * other.a)
+        return F(self.a * other.__a)
 
 
 

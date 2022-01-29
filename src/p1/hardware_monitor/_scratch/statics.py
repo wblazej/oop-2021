@@ -9,5 +9,8 @@ class A:
         return s[0]
 
 
-a = A()
-print(a.first_letter('abc'))
+# a = A()
+# print(a.first_letter('abc'))
+
+print(A.first_letter('abc'))
+print(A().first_letter('abc'))
