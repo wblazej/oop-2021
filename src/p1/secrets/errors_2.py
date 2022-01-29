@@ -14,5 +14,6 @@ if __name__ == '__main__':
         print(f'catched one of {gg} exceptions')
     except RuntimeError as e:
         print(f'ok; komunikat błedu: {str(e)}')
+        raise e
     except KeyError:
         print('ke')

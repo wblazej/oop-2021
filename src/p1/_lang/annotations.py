@@ -29,7 +29,7 @@ def logged(fn):
     return wrapper
 
 
-def retry(times, backoff_type: str='linear', factor: int=1):
+def retry(times, backoff_type: str = 'linear', factor: int = 1):
     def decorator(fn):
         def wrapper(*args, **kw):
             for i in range(times):
@@ -38,7 +38,7 @@ def retry(times, backoff_type: str='linear', factor: int=1):
                     return ret
                 except:
                     # retry 0/5
-                    print(f'Błąd przy wykonaniu funkcji {fn.__name__}, attempt {i+1}/{times}')
+                    print(f'Błąd przy wykonaniu funkcji {fn.__name__}, attempt {i + 1}/{times}')
             raise RuntimeError(f'Cannot execute {fn.__name__}')
 
         return wrapper
@@ -46,8 +46,19 @@ def retry(times, backoff_type: str='linear', factor: int=1):
     return decorator
 
 
-@logged
+class Logger:
+    def log(self, message):
+        raise NotImplemented()
+
+
+class FileBasedLogger(Logger):
+    def log(self, message):
+        print('message')
+
+
+@logged(logger=FileBasedLogger(filename='app.log'))
 @retry(times=5, backoff_type='exponential', factor=2)
+@unsafe(ignored_errors=(IndexError, KeyError))
 def get_money(bank, amount):
     if randint(0, 10) == 0:
         print('→→→→')
