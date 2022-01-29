@@ -27,10 +27,24 @@ async def job(i):
 async def main_foo():
     st = ts()
     log(f'start -- na wątku {thread_name()}')
-    await job(1)
-    asyncio.create_task(job(2))  # "fire and forget"
-    asyncio.create_task(job(3))  # "fire and forget"
-    await sleep(0)
+    # await job(1)
+    # asyncio.create_task(job(2))  # "fire and forget"
+    # asyncio.create_task(job(3))  # "fire and forget"
+    # for i in range(10**4):
+    #     asyncio.create_task(job(i))
+    # await sleep(0)
+
+    # zadanie: trzeba zebrać wyniki job(1) job(2) i job(3), zsumować je -> sum, potem wypisać job(sum)
+    t1 = asyncio.create_task(job(1))
+    t2 = asyncio.create_task(job(2))
+    t3 = asyncio.create_task(job(3))
+    w = await asyncio.gather(t1,t2,t3)
+    print(w)
+    ancestor = sum(w)
+    print(ancestor)
+    result = await job(ancestor)
+    log(f'wynik: {result}')
+
     log(f'main -- done after {ts() - st:.3f}s')
     await sleep(2)
 
