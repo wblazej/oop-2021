@@ -35,10 +35,10 @@ async def main_foo():
     await sleep(2)
 
 async def run_jobs():
-    for i in range(1000):
+    for i in range(1000000):
         asyncio.create_task(job(i + 1))
     await sleep(1)
 
 
-asyncio.run(main_foo())
-# asyncio.run(run_jobs())
+# asyncio.run(main_foo())
+asyncio.run(run_jobs())
