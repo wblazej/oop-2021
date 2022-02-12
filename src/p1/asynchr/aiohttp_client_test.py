@@ -22,7 +22,7 @@ class WdToken:
 async def get_user_details(userid: str) -> User:
     # odpowiednik "requests" (blokującego)
     async with aiohttp.ClientSession() as session:
-        async with session.get(f'http://localhost:8888/users/{userid}/details') as resp:
+        async with session.get(f'https://wdauth.wsi.edu.pl/authenticate?album=kurs01&pass=3e8d115eb4b32b9e9479f387dbe14ee') as resp:
             print(resp.status)
             d = await resp.json()  # tu mamy "słownik"
             u = User(**d)
@@ -47,7 +47,7 @@ async def login_user(album: str, password: str) -> WdToken:
 
 async def main():
 
-    for i in range(1000):
+    for i in range(1):
         asyncio.create_task(get_user_details(f'u{i}'))
 
     await sleep(10)

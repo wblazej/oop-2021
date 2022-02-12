@@ -2,6 +2,7 @@ from asyncio import sleep
 from random import randint
 
 from aiohttp import web
+from aiohttp.abc import BaseRequest
 from faker import Faker
 
 routes = web.RouteTableDef()
@@ -30,13 +31,50 @@ async def welcome(request):
 
 @routes.get('/users/{userid}/details')
 async def welcome(request):
-    #http://0.0.0.0:8888/users/i8811/details
+    # http://0.0.0.0:8888/users/i8811/details
     userid = request.match_info.get('userid', '')
     fake = Faker()
     user_name = fake.name()
     user_address = fake.address()
-    resp = {'userid': userid, 'name': user_name, 'address': user_address }
+    resp = {'userid': userid, 'name': user_name, 'address': user_address}
     return web.json_response(resp)
+
+
+@routes.get('/serve')
+async def serve_file(req):
+    return web.FileResponse('images/bio1.jpg')
+
+@routes.post('/upload')
+async def accept_file(req: BaseRequest):
+    # https://docs.aiohttp.org/en/stable/web_quickstart.html#file-uploads
+    print('file upload request hit...')
+    reader = await req.multipart()
+
+    # field = await reader.next()
+    # name = await field.read(decode=True)
+
+    field = await reader.next()
+    assert field.name == 'file'
+    print(f'read field object: {field}')
+    filename = field.filename
+    # Cannot rely on Content-Length if transfer is chunked.
+    print(f'filename:{filename}')
+    filename = 'images/' + filename
+    size = 0
+    with open(filename, 'wb') as f:
+        file_as_bytes = b''
+        while True:
+            chunk = await field.read_chunk()  # 8192 bytes by default.
+            print(type(chunk))
+            if not chunk:
+                break
+            size += len(chunk)
+            file_as_bytes += chunk
+            # f.write(chunk)
+        f.write(file_as_bytes)
+
+    return web.json_response({'name': filename, 'size': size})
+
 
 
 async def starter():
@@ -47,6 +85,7 @@ async def starter():
     print('app is starting..')
     # await database.connect()
     return app
+
 
 app = web.Application()
 app.add_routes(routes)
