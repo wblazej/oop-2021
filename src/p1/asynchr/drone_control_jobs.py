@@ -35,8 +35,8 @@ async def update_gps(d: Pos):
     log('starting gps... ')
     while True:
         # normalnie tu byśmy napisali d.x = await gpd.get_current_position()
-        d.x = random()
-        d.y = random()
+        d.x = random.randint(-10, 10)
+        d.y = random.randint(-10, 10)
         await sleep(0.5)
 
 async def update_height(d: Pos):
@@ -52,10 +52,17 @@ async def stabilize_drone(d: Pos):
         await sleep(0.01)
 
 
+async def update_altitude(d: Pos):
+    log('starting altidude sensor')
+    while True:
+        d.h += random.randint(-5, 5)
+        await sleep(0.1)
+
+
 async def main_foo():
     st = ts()
     log(f'start -- na wątku {thread_name()}')
-    d = Pos(0,0)
+    d = Pos(0, 0, 10)
     asyncio.create_task(update_gps(d))
     asyncio.create_task(stabilize_drone(d))
     asyncio.create_task(update_height(d))
