@@ -35,7 +35,7 @@ async def welcome(request):
     userid = request.match_info.get('userid', '')
     fake = Faker()
     user_name = fake.name()
-    user_address = fake.address()
+    user_address = fake.address().replace('\n',', ')
     resp = {'userid': userid, 'name': user_name, 'address': user_address}
     return web.json_response(resp)
 
@@ -46,6 +46,9 @@ async def serve_file(req):
 
 @routes.post('/upload')
 async def accept_file(req: BaseRequest):
+    """
+    Funkcja przyjmująca upload pliku.
+    """
     # https://docs.aiohttp.org/en/stable/web_quickstart.html#file-uploads
     print('file upload request hit...')
     reader = await req.multipart()
